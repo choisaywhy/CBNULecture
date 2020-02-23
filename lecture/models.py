@@ -28,10 +28,11 @@ class Lecture(models.Model):
     grade = models.CharField(max_length=10)
     class_prog = models.CharField(max_length=30)
     class_eval = models.CharField(max_length=30)
+    score = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(5)], default=0)
 
 class LectureComment(models.Model):
     lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE, related_name='comment')
-    star = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    star = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(5)])
     content = models.TextField()
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='comment')
     created_at = models.DateTimeField(auto_now_add=True)

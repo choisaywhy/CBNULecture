@@ -5,13 +5,16 @@ from .forms import LectureCommentForm
 from accounts.models import Profile
 from django.contrib.auth.models import User
 
-# Create your views here.
+def evalScore(lecture_id):
+    lecture = Lecture.objects.get(pk=lecture_id)
+    comments = lecture.comment.all()
+    count = comments.count()
+    score = 0
 
-def list(request):
-
-    user = request.user
-    return render(request, 'lecture/list.html', {
-    })
+    for comment in comments:
+        score += comment.star
+    
+    return score/count
 
 def main(request):
     lectures = Lecture.objects.all()
@@ -35,13 +38,17 @@ def createCommentToLecture(request, lecture_id):
 
     if request.method == "POST":
         form = LectureCommentForm(request.POST)
-        if form.is_valid():
-            comment = LectureComment()
-            comment.lecture = lecture
+        comment, created = LectureComment.objects.get_or_create(lecture=lecture, author=request.user, defaults={
+            'star': 0,
+            'content': 'none',
+        })
+        if form.is_valid() and created:
             comment.star = form.cleaned_data['star']
             comment.content = form.cleaned_data['content']
-            comment.author = request.user
             comment.save()
+
+            lecture.score = evalScore(lecture.id)
+            lecture.save()
     # add ajax
     return render(request, 'lecture/detail.html', {
     'lecture' : lecture,
@@ -58,6 +65,9 @@ def updateComment(request, comment_id):
                 comment.star = form.cleaned_data['star']
                 comment.content = form.cleand_data['content']
                 comment.save()
+
+                lecture.score = evalScore(lecture.id)
+                lecture.save()
     # add ajax
     return render(request, 'lecture/detail.html', {
     'lecture' : lecture,
@@ -68,6 +78,9 @@ def deleteComment(request, comment_id):
     comment = LectureComment.objets.get(pk=comment_id)
     lecture = comment.lecture
 
+    # add ajax
     if request.user == comment.author:
         comment.delete()
+        lecture.score = evalScore(lecture.id)
+        lecture.save()
         return redirect('lecture:detail', lecture.id)
