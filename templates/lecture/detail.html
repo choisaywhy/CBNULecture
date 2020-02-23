@@ -11,6 +11,7 @@
 {{ lecture.grade }}<br>
 {{ lecture.class_prog }}<br>
 {{ lecture.class_eval }}<br>
+{{ lecture.score|floatformat:2 }}
 
 <br><br>
 {% for comment in lecture.comment.all %}
