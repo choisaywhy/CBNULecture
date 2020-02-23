@@ -7,4 +7,4 @@ from django.forms import ModelChoiceField
 
 class ProfileForm(forms.Form):
     college = forms.ModelChoiceField(queryset = College.objects.all())
-    department = forms.CharField(max_length=30)
+    department = forms.CharField(max_length=30,widget=forms.Select())
