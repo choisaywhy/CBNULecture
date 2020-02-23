@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{ lecture.title }}
+{{ lecture.est_year }}
+{{ lecture.session }}
+{{ lecture.department_title }}
+{{ lecture.category }}
+{{ lecture.unit }}
+{{ lecture.prof }}
+{{ lecture.grade }}
+{{ lecture.class_prog }}
+{{ lecture.class_eval }}
+
+<form method="POST" action="{% url 'lecture:addComment' lecture.id %}">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit">
+</form>
+{% endblock %}
