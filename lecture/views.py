@@ -38,12 +38,13 @@ def createCommentToLecture(request, lecture_id):
 
     if request.method == "POST":
         form = LectureCommentForm(request.POST)
-        if form.is_valid():
-            comment = LectureComment()
-            comment.lecture = lecture
+        comment, created = LectureComment.objects.get_or_create(lecture=lecture, author=request.user, defaults={
+            'star': 0,
+            'content': 'none',
+        })
+        if form.is_valid() and created:
             comment.star = form.cleaned_data['star']
             comment.content = form.cleaned_data['content']
-            comment.author = request.user
             comment.save()
 
             lecture.score = evalScore(lecture.id)
