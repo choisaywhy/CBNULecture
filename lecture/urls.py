@@ -4,8 +4,7 @@ from . import views
 app_name='lecture'
 
 urlpatterns = [
-    path('', views.home, name='home'),
-    path('list/', views.main, name='list'),
+    path('', views.main, name='list'),
     path('detail/<int:lecture_id>', views.detail, name='detail'),
     path('addcomment/<int:lecture_id>', views.createCommentToLecture, name='addComment'),
     path('updatecomment/<int:comment_id>', views.updateComment, name='updateComment'),

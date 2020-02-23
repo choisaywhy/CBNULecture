@@ -35,7 +35,7 @@ DEFAULT_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-
+    'django.forms',
 ]
 
 ADDED_APPS = [
@@ -126,3 +126,5 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 LOGIN_REDIRECT = '/'
 LOGOUT_REDIRECT = '/'
+
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'

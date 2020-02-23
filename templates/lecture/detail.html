@@ -1,17 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{{ lecture.title }}
-{{ lecture.est_year }}
-{{ lecture.session }}
-{{ lecture.department_title }}
-{{ lecture.category }}
-{{ lecture.unit }}
-{{ lecture.prof }}
-{{ lecture.grade }}
-{{ lecture.class_prog }}
-{{ lecture.class_eval }}
+{{ lecture.title }}<br>
+{{ lecture.est_year }}<br>
+{{ lecture.session }}<br>
+{{ lecture.department_title }}<br>
+{{ lecture.category }}<br>
+{{ lecture.unit }}<br>
+{{ lecture.prof }}<br>
+{{ lecture.grade }}<br>
+{{ lecture.class_prog }}<br>
+{{ lecture.class_eval }}<br>
 
+<br><br>
+{% for comment in lecture.comment.all %}
+{{ comment.star }}
+{{ comment.content }}
+{% endfor %}
 <form method="POST" action="{% url 'lecture:addComment' lecture.id %}">
     {% csrf_token %}
     {{form}}

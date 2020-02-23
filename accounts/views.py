@@ -18,7 +18,7 @@ def signup(request):
                 profile.department = form.cleaned_data['department']
                 profile.save()
                 auth.login(request, user)
-                return redirect('lecture:home')
+                return redirect('lecture:list')
             else:
                 user.delete()
         
@@ -38,11 +38,11 @@ def login(request):
         user = auth.authenticate(request, username=username, password=password)
         if user is not None:
             auth.login(request, user)
-            return redirect('lecture:home')
+            return redirect('lecture:list')
         else:
             return render(request, 'accounts/login.html', {'error': 'username or password is incorrect'})
     return render(request, 'accounts/login.html')
 
 def logout(request):
     auth.logout(request)
-    return redirect('lecture:home')
+    return redirect('lecture:list')

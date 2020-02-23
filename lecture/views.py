@@ -7,10 +7,10 @@ from django.contrib.auth.models import User
 
 # Create your views here.
 
-def home(request):
+def list(request):
 
     user = request.user
-    return render(request, 'lecture/home.html', {
+    return render(request, 'lecture/list.html', {
     })
 
 def main(request):
@@ -39,7 +39,7 @@ def createCommentToLecture(request, lecture_id):
             comment = LectureComment()
             comment.lecture = lecture
             comment.star = form.cleaned_data['star']
-            comment.content = form.cleand_data['content']
+            comment.content = form.cleaned_data['content']
             comment.author = request.user
             comment.save()
     # add ajax
