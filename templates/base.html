@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/list.css' %}">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="container">
+        <a href="{% url 'accounts:login' %}">로그인</a>
+        <a href="{% url 'accounts:logout' %}">로그아웃</a>
+        <a href="{% url 'accounts:signup' %}">회원가입</a>
+        <br> 
+        현재 상태: 
+        {% if user.is_active %} 
+        로그인 중
+        <br>
+        ({{ user.username }}님 |
+        {{ user.profile.college }} |
+        {{ user.profile.department }} )
+        {% else %} 
+        로그인 안 됨
+        {% endif %}
+        <hr> 
+        {% block content %} 
+        {% endblock %}
+    </div>
+
+</body>
+
+</html>

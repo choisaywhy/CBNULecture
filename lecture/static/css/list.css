@@ -4,7 +4,7 @@ body {
 }
 
 .container {
-    padding-top: 30px;
+    padding-top: 10px;
 }
 
 .title {
@@ -14,8 +14,8 @@ body {
 }
 
 .input {
-    width: 100%;
-    padding: 10px 0;
+    width: 80%;
+    padding: 7px 0 7px .5rem;
     font-size: 14px;
     line-height: 18px;
     color: #575756;
@@ -26,10 +26,12 @@ body {
 .input::placeholder {
     color: rgba(87, 87, 86, 0.8);
     letter-spacing: 1px;
+    padding-left: 3px;
 }
 
 .input:focus {
     outline: 0;
+    text-decoration: underline;
 }
 
 .box {
@@ -70,4 +72,12 @@ select {
 a {
     text-decoration: none;
     color: black;
+}
+
+span{
+    font-size: 15px;
+}
+
+h3{
+    margin-top: 0;
 }

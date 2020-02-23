@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="title">교과목 정보</h1>
+    <table>
+        <thead>
+            <tr class="category">강의명: </tr> {{ lecture.title }}
+        </thead>
+        <tbody>
+            <tr>
+                <td class="category">개설연도</td>
+                <td colspan="2">{{ lecture.est_year }} - {{ lecture.session }}</td>
+                <td class="category">개설학과</td>
+                <td >{{ lecture.department_title }}</td>
+            </tr>
+            <tr>
+                <td class="category">담당교수</td>
+                <td colspan="2">{{ lecture.prof }}</td>
+                <td class="category">이수구분</td>
+                <td colspan="2">{{ lecture.category }}</td>
+            </tr>
+            <tr>
+                <td class="category">개설학년</td>
+                <td colspan="2" style="color: blue;">{{ lecture.grade }}</td>
+                <td class="category">학점시수</td>
+                <td colspan="2">{{ lecture.unit }}</td>
+            </tr>
+            <tr>
+                <p>별점:⭐⭐⭐⭐</p>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+
+<div class="container">
+    <h4 class="title">수업 진행 방법</h4>
+    <div class="box">
+        차트
+    </div>
+</div>
+
+<div class="container">
+    <h4 class="title">평가 방법</h4>
+    <div class="box">
+        차트
+    </div>
+</div>
+
+<div class="container">
+<h4 class="title">댓글 작성</h4>
+
+<form method="POST" action="{% url 'lecture:addComment' lecture.id %}">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit">
+</form>
+</div>
+
+<div class="container">
+<h3 class="title">댓글</h3>
+
+{% for comment in lecture.comment.all %}
+<hr>
+별점: {{ comment.star }}
+<br>
+내용: {{ comment.content }}
+<hr>
+<br>
+</div>
+
+{% endfor %}
+
+{% endblock %}
