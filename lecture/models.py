@@ -31,7 +31,7 @@ class Lecture(models.Model):
 
 class LectureComment(models.Model):
     lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE, related_name='comment')
-    star = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    star = models.FloatField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     content = models.TextField()
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='comment')
     created_at = models.DateTimeField(auto_now_add=True)

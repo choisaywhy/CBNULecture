@@ -22,6 +22,6 @@ class starWidget(forms.TextInput):
         attrs.update({
             'min': 0,
             'max': 5,
-            'step': 1,
+            'step': 0.5,
         })
         return attrs

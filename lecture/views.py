@@ -7,12 +7,6 @@ from django.contrib.auth.models import User
 
 # Create your views here.
 
-def list(request):
-
-    user = request.user
-    return render(request, 'lecture/list.html', {
-    })
-
 def main(request):
     lectures = Lecture.objects.all()
 
@@ -68,6 +62,7 @@ def deleteComment(request, comment_id):
     comment = LectureComment.objets.get(pk=comment_id)
     lecture = comment.lecture
 
+    # add ajax
     if request.user == comment.author:
         comment.delete()
         return redirect('lecture:detail', lecture.id)
