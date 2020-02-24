@@ -22,7 +22,21 @@
                     <h2>{{lecture.title}}</h2>
                 </a>
                 <hr>
-                <span style="float: right;">별점: ⭐⭐⭐⭐⭐</span>
+                <span style="float: right;">별점: 
+                    {% if lecture.score > 4 %}
+                    ⭐⭐⭐⭐⭐
+                    {% elif lecture.score > 3 and lecture.score <= 4%}
+                    ⭐⭐⭐⭐
+                    {% elif lecture.score > 2 and lecture.score <= 3%}
+                    ⭐⭐⭐
+                    {% elif lecture.score > 1 and lecture.score <= 2%}
+                    ⭐⭐
+                    {% elif lecture.score > 0 %}
+                    ⭐
+                    {% else %}
+
+                    {% endif %}
+                </span>
     </div>
 </div>
 

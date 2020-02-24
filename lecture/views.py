@@ -1,6 +1,7 @@
 import openpyxl
 from django.core import serializers
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import Lecture, LectureComment, College, Department
 from .forms import LectureCommentForm
@@ -27,6 +28,8 @@ def main(request):
         'lectures' : lectures,
     })
 
+
+@login_required
 def detail(request, lecture_id):
     lecture = Lecture.objects.get(pk=lecture_id)
     form = LectureCommentForm()

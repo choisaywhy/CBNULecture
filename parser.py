@@ -54,7 +54,7 @@ def saveCrawling ():
         
         # data_list.append(data)
         i+=1
-        Lecture(title=title, est_year=est_year, score=30, session=session, category=category, unit=unit, prof=prof, grade=grade, class_prog=class_prog, class_eval=class_eval).save()
+        Lecture(title=title, est_year=est_year, score=0, session=session, category=category, unit=unit, prof=prof, grade=grade, class_prog=class_prog, class_eval=class_eval).save()
 
 
     # return data_list

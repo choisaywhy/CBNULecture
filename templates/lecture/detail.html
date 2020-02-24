@@ -38,7 +38,20 @@
             <td colspan="2">{{ lecture.unit }}</td>
         </tr>
         <tr>
-            <p>별점:⭐⭐⭐⭐⭐{{lecture.score}}</p>
+            <p>별점:               
+                {% if lecture.score > 4 %}
+                ⭐⭐⭐⭐⭐
+                {% elif lecture.score > 3 and lecture.score <= 4%}
+                ⭐⭐⭐⭐
+                {% elif lecture.score > 2 and lecture.score <= 3%}
+                ⭐⭐⭐
+                {% elif lecture.score > 1 and lecture.score <= 2%}
+                ⭐⭐
+                {% elif lecture.score > 0 %}
+                ⭐
+                {% else %}
+
+                {% endif %}</p>
         </tr>
     </tbody>
 </table>
