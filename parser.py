@@ -12,10 +12,11 @@ def saveCrawling ():
     data_list = []
     
     i = 0
-    while i <3 :
+    while i <2 :
         # 파일 불러오기(수식이 아닌 값으로)
         report_name = 'report ('+str(i)+').xlsx'
         excelFile = openpyxl.load_workbook( filename = report_name)
+        print(report_name)
 
         # 시트 불러오기
         sheet = excelFile['sheet 1']
@@ -40,8 +41,10 @@ def saveCrawling ():
         grade = sheet['T12'].value
         # 수업진행방식
         class_prog = sheet['D20'].value + '&' + sheet['G20'].value + '&' + sheet['J20'].value + '&' + sheet['N20'].value + '&' + sheet['U20'].value + '&' + sheet['AA20'].value
+
         # 평가방법
         class_eval = sheet['D23'].value + '&' + sheet['G23'].value + '&' + sheet['J23'].value + '&' + sheet['N23'].value + '&' + sheet['U23'].value + '&' + sheet['AA23'].value
+
 
         # data = [title, est_year, session, department_title, category, unit, prof, grade, class_prog, class_eval]
         
