@@ -11,8 +11,8 @@ from lecture.models import Lecture
 def saveCrawling ():
     data_list = []
     
-    i = 0
-    while i <305 :
+    i = 305
+    while i <401 :
         # 파일 불러오기(수식이 아닌 값으로)
         try :
             report_name = 'report ('+str(i)+').xlsx'
