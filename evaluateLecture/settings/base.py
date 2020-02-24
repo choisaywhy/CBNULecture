@@ -30,10 +30,12 @@ DEFAULT_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'lecture',
+    'accounts',
 ]
 
 THIRD_PARTY_APPS = [
-
+    'django.forms',
 ]
 
 ADDED_APPS = [
@@ -57,7 +59,7 @@ ROOT_URLCONF = 'evaluateLecture.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')], # 장고 템플릿을 프로젝트 레벨에서 관리하기 위해 추가
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,3 +124,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+LOGIN_REDIRECT = '/'
+LOGOUT_REDIRECT = '/'
+
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
