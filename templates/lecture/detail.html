@@ -70,7 +70,7 @@
     <hr>
     <div id="comment-box">
         {% for comment in lecture.comment.all %}
-        
+
         <div id="{{comment.id}}" class="comment">
             {{comment.author}}
             {% if request.user == comment.author %}
@@ -79,7 +79,7 @@
             {% endif %}
             <div class="star">{{ comment.star }}</div>
             <div class="content">{{ comment.content }}</div>
-            
+
         </div>
         <hr>
         {% endfor %}
@@ -87,52 +87,60 @@
 </div>
 
 <script type="text/javascript">
+
+    let class_prog = $.map('{{lecture.class_prog}}'.split('&amp;'), function (value) {
+        return parseInt(value, 10);
+    });
+    let class_eval = $.map('{{lecture.class_eval}}'.split('&amp;'), function (value) {
+        return parseInt(value, 10);
+    });
+
     let ctx = document.getElementById('progress');
     let ctx2 = document.getElementById('evaluation')
     ctx.width = 300;
     ctx.height = 300;
     ctx2.width = 300;
     ctx2.height = 300;
-    
+
 
     let progress = new Chart(ctx, {
         type: 'pie',
         data: {
             labels: ["강의", "토의/토론", "실험/실습", "현장학습", "개별/팀별발표", "기타"],
             datasets: [{
-                data: [60, 20, 0, 0, 10, 10],
+                data: class_prog,
                 backgroundColor: ["#FF3D67", "#FF9124", "#FFC233", "#22CECE", "#059BFF", "#8142FF"],
                 borderColor: "#fff"
             }],
         },
         options: {
             responsive: false,
-        title: {
-            display: true,
-            text: '강의진행',
-            fontSize: 20,
-        },
-        legend: {
-            position: 'bottom',
-        },
-        plugins: {
-            datalabels: {
-                formatter: function (value, ctx) {
-                    let datasets = ctx.chart.data.datasets;
-                    if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
-                        let sum = datasets[0].data.reduce((a, b) => a + b, 0);
-                        let percentage = Math.round((value / sum) * 100) + '%';
-                        if (percentage == '0%') {
-                            return '';
-                        }
-                        return percentage;
-                    } else {
-                        return percentage;
-                    }
-                },
-                color: '#fff',
+            title: {
+                display: true,
+                text: '강의진행',
+                fontSize: 20,
             },
-        }
+            legend: {
+                position: 'bottom',
+            },
+            plugins: {
+                datalabels: {
+                    formatter: function (value, ctx) {
+                        let datasets = ctx.chart.data.datasets;
+                        if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
+                            let sum = datasets[0].data.reduce((a, b) => a + b, 0);
+                            let percentage = Math.round((value / sum) * 100) + '%';
+                            if (percentage == '0%') {
+                                return '';
+                            }
+                            return percentage;
+                        } else {
+                            return percentage;
+                        }
+                    },
+                    color: '#fff',
+                },
+            }
         },
     });
 
@@ -141,39 +149,39 @@
         data: {
             labels: ["중간고사", "기말고사", "출석", "퀴즈", "과제", "기타"],
             datasets: [{
-                data: [60, 20, 0, 0, 10, 10],
+                data: class_eval,
                 backgroundColor: ["#FF3D67", "#FF9124", "#FFC233", "#22CECE", "#059BFF", "#8142FF"],
                 borderColor: "#fff"
             }],
         },
         options: {
             responsive: false,
-        title: {
-            display: true,
-            text: '평가방법',
-            fontSize: 20,
-        },
-        legend: {
-            position: 'bottom',
-        },
-        plugins: {
-            datalabels: {
-                formatter: function (value, ctx2) {
-                    let datasets = ctx2.chart.data.datasets;
-                    if (datasets.indexOf(ctx2.dataset) === datasets.length - 1) {
-                        let sum = datasets[0].data.reduce((a, b) => a + b, 0);
-                        let percentage = Math.round((value / sum) * 100) + '%';
-                        if (percentage == '0%') {
-                            return '';
-                        }
-                        return percentage;
-                    } else {
-                        return percentage;
-                    }
-                },
-                color: '#fff',
+            title: {
+                display: true,
+                text: '평가방법',
+                fontSize: 20,
             },
-        }
+            legend: {
+                position: 'bottom',
+            },
+            plugins: {
+                datalabels: {
+                    formatter: function (value, ctx2) {
+                        let datasets = ctx2.chart.data.datasets;
+                        if (datasets.indexOf(ctx2.dataset) === datasets.length - 1) {
+                            let sum = datasets[0].data.reduce((a, b) => a + b, 0);
+                            let percentage = Math.round((value / sum) * 100) + '%';
+                            if (percentage == '0%') {
+                                return '';
+                            }
+                            return percentage;
+                        } else {
+                            return percentage;
+                        }
+                    },
+                    color: '#fff',
+                },
+            }
         },
     });
 
