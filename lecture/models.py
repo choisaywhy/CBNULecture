@@ -30,6 +30,9 @@ class Lecture(models.Model):
     class_eval = models.CharField(max_length=30)
     score = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(5)], default=0)
 
+    def __str__(self):
+        return self.title
+
 class LectureComment(models.Model):
     lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE, related_name='comment')
     star = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(5)])

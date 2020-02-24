@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.core import serializers
+import openpyxl
 from .models import Lecture, LectureComment, College, Department
 from .forms import LectureCommentForm
 from accounts.models import Profile
@@ -43,20 +42,14 @@ def createCommentToLecture(request, lecture_id):
             'star': 0,
             'content': 'none',
         })
-        print(created)
         if form.is_valid() and created:
             comment.star = form.cleaned_data['star']
             comment.content = form.cleaned_data['content']
-            comment.author = request.user
             comment.save()
 
             lecture.score = evalScore(lecture.id)
             lecture.save()
-            
-            jsonData = serializers.serialize('json',lecture.comment.all(),indent=2, use_natural_foreign_keys=True, use_natural_primary_keys=True)
-            return HttpResponse(jsonData, content_type='application/json')
-        else:
-            return redirect('lecture:detail', lecture.pk)
+    # add ajax
     return render(request, 'lecture/detail.html', {
     'lecture' : lecture,
     'form' : form,
@@ -71,22 +64,18 @@ def updateComment(request, comment_id):
             if form.is_valid():
                 comment.star = form.cleaned_data['star']
                 comment.content = form.cleand_data['content']
-                comment.author = request.user
                 comment.save()
 
                 lecture.score = evalScore(lecture.id)
                 lecture.save()
-                jsonData = serializers.serialize('json',lecture.comment.all(),indent=2, use_natural_foreign_keys=True, use_natural_primary_keys=True)
-                return HttpResponse(jsonData, content_type='application/json')
-            else:
-                return redirect('lecture:detail', lecture.pk)
+    # add ajax
     return render(request, 'lecture/detail.html', {
     'lecture' : lecture,
     'form' : form,
     })
 
 def deleteComment(request, comment_id):
-    comment = LectureComment.objects.get(pk=comment_id)
+    comment = LectureComment.objets.get(pk=comment_id)
     lecture = comment.lecture
 
     # add ajax
@@ -94,9 +83,4 @@ def deleteComment(request, comment_id):
         comment.delete()
         lecture.score = evalScore(lecture.id)
         lecture.save()
-    return redirect('lecture:detail', lecture.id)
-
-def getComment(request, comment_id):
-    lecture = LectureComment.objects.filter(pk=comment_id)
-    jsonData = serializers.serialize('json',lecture,indent=2, use_natural_foreign_keys=True, use_natural_primary_keys=True)
-    return HttpResponse(jsonData, content_type='application/json')
+        return redirect('lecture:detail', lecture.id)
