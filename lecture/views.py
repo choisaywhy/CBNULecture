@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-
+import openpyxl
 from .models import Lecture, LectureComment, College, Department
 from .forms import LectureCommentForm
 from accounts.models import Profile
@@ -84,3 +84,5 @@ def deleteComment(request, comment_id):
         lecture.score = evalScore(lecture.id)
         lecture.save()
         return redirect('lecture:detail', lecture.id)
+
+
