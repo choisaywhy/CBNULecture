@@ -11,11 +11,12 @@ from lecture.models import Lecture
 def saveCrawling ():
     data_list = []
     
-    i = 305
-    while i <401 :
+    i = 0
+    while i <111 :
         # 파일 불러오기(수식이 아닌 값으로)
+        
         try :
-            report_name = 'report ('+str(i)+').xlsx'
+            report_name = './crawling_reports/report ('+str(i)+').xlsx'
             excelFile = openpyxl.load_workbook( filename = report_name)
             print(report_name)
         except :
