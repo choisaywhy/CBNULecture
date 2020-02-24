@@ -1,31 +1,42 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <script>
+        var current_user = '{{request.user}}';
+        var csrf_input = '{% csrf_token %}';
+        var lecture_id = '{{lecture.id}}'
+    </script>
+    {% block extra_js %}
+    {% endblock extra_js %}
 
+
+    <link rel="stylesheet" href="{% static 'css/list.css' %}">
+    <title>Document</title>
 </head>
+
 <body>
-    
     <div class="container">
+        {% if user.is_active %}
+        <a href="{% url 'accounts:logout' %}">로그아웃</a>
+        <br>
+        <p>접속 중 ({{ user.username }}님 |
+        {{ user.profile.college }} |
+        {{ user.profile.department }} )</p>
+        {% else %}
         <a href="{% url 'accounts:login' %}">로그인</a>
         <a href="{% url 'accounts:signup' %}">회원가입</a>
-        <a href="{% url 'accounts:logout' %}">로그아웃</a>
-        
-        {% if user.is_active %}
-        로그인중
-        {{ user.username }}
-        {{ user.profile.college }}
-        {{ user.profile.department }}
-        {% else %}
-        로그인 아님
+        <p>로그인 필요</p>
         {% endif %}
-        {% block content %}
-        {% endblock %}
+        <hr> 
+        {% block content %} 
+        {% endblock content %}
     </div>
-    
+
 </body>
+
 </html>

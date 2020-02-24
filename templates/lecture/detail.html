@@ -1,26 +1,182 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+<script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<script src="{% static 'js/detail.js' %}">
+</script>
+
+{% endblock extra_js %}
 
 {% block content %}
-{{ lecture.title }}<br>
-{{ lecture.est_year }}<br>
-{{ lecture.session }}<br>
-{{ lecture.department_title }}<br>
-{{ lecture.category }}<br>
-{{ lecture.unit }}<br>
-{{ lecture.prof }}<br>
-{{ lecture.grade }}<br>
-{{ lecture.class_prog }}<br>
-{{ lecture.class_eval }}<br>
-{{ lecture.score|floatformat:2 }}
 
-<br><br>
-{% for comment in lecture.comment.all %}
-{{ comment.star }}
-{{ comment.content }}
-{% endfor %}
-<form method="POST" action="{% url 'lecture:addComment' lecture.id %}">
-    {% csrf_token %}
-    {{form}}
-    <input type="submit">
-</form>
+<h1 class="title">교과목 정보</h1>
+<table>
+    <thead>
+        <tr class="category">강의명: </tr> {{ lecture.title }}
+    </thead>
+    <tbody>
+        <tr>
+            <td class="category">개설연도</td>
+            <td colspan="2">{{ lecture.est_year }} - {{ lecture.session }}</td>
+            <td class="category">개설학과</td>
+            <td>{{ lecture.department_title }}</td>
+        </tr>
+        <tr>
+            <td class="category">담당교수</td>
+            <td colspan="2">{{ lecture.prof }}</td>
+            <td class="category">이수구분</td>
+            <td colspan="2">{{ lecture.category }}</td>
+        </tr>
+        <tr>
+            <td class="category">개설학년</td>
+            <td colspan="2" style="color: blue;">{{ lecture.grade }}</td>
+            <td class="category">학점시수</td>
+            <td colspan="2">{{ lecture.unit }}</td>
+        </tr>
+        <tr>
+            <p>별점:⭐⭐⭐⭐⭐{{lecture.score}}</p>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<div class="container">
+    <div>
+        <canvas id="progress" width="300"></canvas>
+    </div>
+</div>
+
+<div class="container">
+    <div>
+        <canvas id="evaluation" width="500" height="500"></canvas>
+    </div>
+</div>
+
+<div class="container">
+    <h4 class="title">댓글 작성</h4>
+
+    <form name="commentForm" method="POST">
+        {% csrf_token %}
+        {{form}}
+        <input type="button" value="작성" onclick="addComment({{ lecture.id }})">
+    </form>
+</div>
+
+<div class="container">
+    <hr>
+    <div id="comment-box">
+        {% for comment in lecture.comment.all %}
+        
+        <div id="{{comment.id}}" class="comment">
+            {{comment.author}}
+            {% if request.user == comment.author %}
+            <a href="{% url 'lecture:deleteComment' comment.id %}">삭제</a>
+            <a id="{{comment.id}}" href="javascript:" onclick="commentEdit(this)">수정</a>
+            {% endif %}
+            <div class="star">{{ comment.star }}</div>
+            <div class="content">{{ comment.content }}</div>
+            
+        </div>
+        <hr>
+        {% endfor %}
+    </div>
+</div>
+
+<script type="text/javascript">
+    let ctx = document.getElementById('progress');
+    let ctx2 = document.getElementById('evaluation')
+    ctx.width = 300;
+    ctx.height = 300;
+    ctx2.width = 300;
+    ctx2.height = 300;
+    
+
+    let progress = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ["강의", "토의/토론", "실험/실습", "현장학습", "개별/팀별발표", "기타"],
+            datasets: [{
+                data: [60, 20, 0, 0, 10, 10],
+                backgroundColor: ["#FF3D67", "#FF9124", "#FFC233", "#22CECE", "#059BFF", "#8142FF"],
+                borderColor: "#fff"
+            }],
+        },
+        options: {
+            responsive: false,
+        title: {
+            display: true,
+            text: '강의진행',
+            fontSize: 20,
+        },
+        legend: {
+            position: 'bottom',
+        },
+        plugins: {
+            datalabels: {
+                formatter: function (value, ctx) {
+                    let datasets = ctx.chart.data.datasets;
+                    if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
+                        let sum = datasets[0].data.reduce((a, b) => a + b, 0);
+                        let percentage = Math.round((value / sum) * 100) + '%';
+                        if (percentage == '0%') {
+                            return '';
+                        }
+                        return percentage;
+                    } else {
+                        return percentage;
+                    }
+                },
+                color: '#fff',
+            },
+        }
+        },
+    });
+
+    let evaluation = new Chart(ctx2, {
+        type: 'pie',
+        data: {
+            labels: ["중간고사", "기말고사", "출석", "퀴즈", "과제", "기타"],
+            datasets: [{
+                data: [60, 20, 0, 0, 10, 10],
+                backgroundColor: ["#FF3D67", "#FF9124", "#FFC233", "#22CECE", "#059BFF", "#8142FF"],
+                borderColor: "#fff"
+            }],
+        },
+        options: {
+            responsive: false,
+        title: {
+            display: true,
+            text: '평가방법',
+            fontSize: 20,
+        },
+        legend: {
+            position: 'bottom',
+        },
+        plugins: {
+            datalabels: {
+                formatter: function (value, ctx2) {
+                    let datasets = ctx2.chart.data.datasets;
+                    if (datasets.indexOf(ctx2.dataset) === datasets.length - 1) {
+                        let sum = datasets[0].data.reduce((a, b) => a + b, 0);
+                        let percentage = Math.round((value / sum) * 100) + '%';
+                        if (percentage == '0%') {
+                            return '';
+                        }
+                        return percentage;
+                    } else {
+                        return percentage;
+                    }
+                },
+                color: '#fff',
+            },
+        }
+        },
+    });
+
+</script>
+
 {% endblock %}

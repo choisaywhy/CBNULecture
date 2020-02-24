@@ -1,7 +1,47 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% for lecture in lectures%}
-<a href="{%url 'lecture:detail' lecture.id %}">{{lecture.title}}</a>
+
+{% for lecture in lectures %}
+
+<div class="container">
+    <h3 class="title">강의 검색!</h3>
+    다음 조건으로 검색: <br>
+    <select>            
+        <option>이수구분</option>
+        <option>전공</option>
+        <option>교양</option>
+    </select>
+    <select>
+        <option>선택</option>
+        <option>1</option>
+        <option>2</option>
+    </select>
+    <select>
+        <option>선택</option>
+        <option>3</option>
+        <option>4</option>
+    </select>
+    <select>
+        <option>선택</option>
+        <option>5</option>
+        <option>6</option>
+    </select>
+    <br>
+    <input class="input" type="text" placeholder="강의명/교수명으로 검색해보세요">
+    <input type="submit" value="검색">
+</div>
+
+<div style="margin-top: 10%;">
+    <div class="box" style="border: 1px solid black;">
+        <span>개설년도: 2020-1 | 교수 : 누구씨 | 전공필수<span>
+        <br>
+        <a href="{% url 'lecture:detail' lecture.id %}"><h2>{{lecture.title}}</h2></a>
+        <hr>
+        <span>댓글: ?개</span> <span style="float: right;">별점: ⭐⭐⭐⭐⭐</span>
+    </div>
+</div>
+
 {% endfor %}
+
 {% endblock %}

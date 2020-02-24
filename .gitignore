@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+# Byte-compiled / optimized / DLL files
+__pycache__/
+=======
 
 # Created by https://www.gitignore.io/api/django
 # Edit at https://www.gitignore.io/?templates=django
@@ -22,6 +26,7 @@ media
 
 ### Django.Python Stack ###
 # Byte-compiled / optimized / DLL files
+>>>>>>> 144eb0ff2ec615158c2e57ca5eacff64217b9dfd
 *.py[cod]
 *$py.class
 
@@ -69,11 +74,29 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *.cover
+<<<<<<< HEAD
+*.py,cover
+=======
+>>>>>>> 144eb0ff2ec615158c2e57ca5eacff64217b9dfd
 .hypothesis/
 .pytest_cache/
 
 # Translations
 *.mo
+<<<<<<< HEAD
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+=======
+>>>>>>> 144eb0ff2ec615158c2e57ca5eacff64217b9dfd
 
 # Scrapy stuff:
 .scrapy
@@ -84,6 +107,16 @@ docs/_build/
 # PyBuilder
 target/
 
+<<<<<<< HEAD
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+=======
+>>>>>>> 144eb0ff2ec615158c2e57ca5eacff64217b9dfd
 # pyenv
 .python-version
 
@@ -94,12 +127,33 @@ target/
 #   install all needed dependencies.
 #Pipfile.lock
 
+<<<<<<< HEAD
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+=======
 # celery beat schedule file
 celerybeat-schedule
+>>>>>>> 144eb0ff2ec615158c2e57ca5eacff64217b9dfd
 
 # SageMath parsed files
 *.sage.py
 
+<<<<<<< HEAD
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+=======
+>>>>>>> 144eb0ff2ec615158c2e57ca5eacff64217b9dfd
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -107,11 +161,14 @@ celerybeat-schedule
 # Rope project settings
 .ropeproject
 
+<<<<<<< HEAD
+=======
 # Mr Developer
 .mr.developer.cfg
 .project
 .pydevproject
 
+>>>>>>> 144eb0ff2ec615158c2e57ca5eacff64217b9dfd
 # mkdocs documentation
 /site
 
@@ -122,5 +179,8 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+<<<<<<< HEAD
+=======
 
 # End of https://www.gitignore.io/api/django
+>>>>>>> 144eb0ff2ec615158c2e57ca5eacff64217b9dfd
