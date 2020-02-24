@@ -9,5 +9,6 @@ urlpatterns = [
     path('addcomment/<int:lecture_id>', views.createCommentToLecture, name='addComment'),
     path('updatecomment/<int:comment_id>', views.updateComment, name='updateComment'),
     path('deletecomment/<int:comment_id>', views.deleteComment, name='deleteComment'),
+    path('getcomment/<int:comment_id>', views.getComment, name='getComment')
 
 ]

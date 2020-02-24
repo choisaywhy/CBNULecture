@@ -6,6 +6,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script>
+        var current_user = '{{request.user}}';
+        var csrf_input = '{% csrf_token %}';
+        var lecture_id = '{{lecture.id}}'
+    </script>
+    {% block extra_js %}
+    {% endblock extra_js %}
+
+
     <link rel="stylesheet" href="{% static 'css/list.css' %}">
     <title>Document</title>
 </head>
@@ -20,15 +29,13 @@
         {% if user.is_active %} 
         로그인 중
         <br>
-        ({{ user.username }}님 |
-        {{ user.profile.college }} |
-        {{ user.profile.department }} )
+        ({{ user.username }}님)
         {% else %} 
         로그인 안 됨
         {% endif %}
         <hr> 
         {% block content %} 
-        {% endblock %}
+        {% endblock content %}
     </div>
 
 </body>
