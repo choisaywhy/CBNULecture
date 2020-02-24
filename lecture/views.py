@@ -1,5 +1,7 @@
-from django.shortcuts import render, redirect
 import openpyxl
+from django.core import serializers
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from .models import Lecture, LectureComment, College, Department
 from .forms import LectureCommentForm
 from accounts.models import Profile
@@ -13,8 +15,10 @@ def evalScore(lecture_id):
 
     for comment in comments:
         score += comment.star
-    
-    return score/count
+    try:
+        return score/count
+    except ZeroDivisionError:
+        return 0
 
 def main(request):
     lectures = Lecture.objects.all()
@@ -42,14 +46,20 @@ def createCommentToLecture(request, lecture_id):
             'star': 0,
             'content': 'none',
         })
+        print(created)
         if form.is_valid() and created:
             comment.star = form.cleaned_data['star']
             comment.content = form.cleaned_data['content']
+            comment.author = request.user
             comment.save()
 
             lecture.score = evalScore(lecture.id)
             lecture.save()
-    # add ajax
+            
+            jsonData = serializers.serialize('json',lecture.comment.all(),indent=2, use_natural_foreign_keys=True, use_natural_primary_keys=True)
+            return HttpResponse(jsonData, content_type='application/json')
+        else:
+            return redirect('lecture:detail', lecture.pk)
     return render(request, 'lecture/detail.html', {
     'lecture' : lecture,
     'form' : form,
@@ -78,10 +88,8 @@ def updateComment(request, comment_id):
     })
 
 def deleteComment(request, comment_id):
-    comment = LectureComment.objets.get(pk=comment_id)
+    comment = LectureComment.objects.get(pk=comment_id)
     lecture = comment.lecture
-
-    # add ajax
     if request.user == comment.author:
         comment.delete()
         lecture.score = evalScore(lecture.id)

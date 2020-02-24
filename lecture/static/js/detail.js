@@ -19,9 +19,11 @@ function addComment(post_id) {
 
             success: function(res) {
                 let text = Array();
-                res.forEach(function(e) {
+                console.log(res)
+                for( let i=0; i<res.length;i++) {
+                    e = res[i];
                     pk = e.pk;
-                    user = e.fields.author[0];
+                    user = e.fields['author'][0];
                     star = e.fields['star'];
                     content =  replacetoRN(e.fields['content']);
                     if (current_user == user) {
@@ -30,7 +32,7 @@ function addComment(post_id) {
                         tmp = user +'<div>'+ e.fields['star'].toFixed(1) +'<div>'+ e.fields['content'] +'</div><hr>'
                     }
                     text.push(tmp);
-                });
+                }
                 $('#comment-box').html(text);
             },
             error: function(req, status, err) {
