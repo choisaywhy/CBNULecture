@@ -12,19 +12,16 @@
 
 <body>
     <div class="container">
-        <a href="{% url 'accounts:login' %}">로그인</a>
+        {% if user.is_active %}
         <a href="{% url 'accounts:logout' %}">로그아웃</a>
-        <a href="{% url 'accounts:signup' %}">회원가입</a>
-        <br> 
-        현재 상태: 
-        {% if user.is_active %} 
-        로그인 중
         <br>
-        ({{ user.username }}님 |
+        <p>접속 중 ({{ user.username }}님 |
         {{ user.profile.college }} |
-        {{ user.profile.department }} )
-        {% else %} 
-        로그인 안 됨
+        {{ user.profile.department }} )</p>
+        {% else %}
+        <a href="{% url 'accounts:login' %}">로그인</a>
+        <a href="{% url 'accounts:signup' %}">회원가입</a>
+        <p>로그인 필요</p>
         {% endif %}
         <hr> 
         {% block content %} 
