@@ -12,14 +12,18 @@ def saveCrawling ():
     data_list = []
     
     i = 0
-    while i <2 :
+    while i <305 :
         # 파일 불러오기(수식이 아닌 값으로)
-        report_name = 'report ('+str(i)+').xlsx'
-        excelFile = openpyxl.load_workbook( filename = report_name)
-        print(report_name)
+        try :
+            report_name = 'report ('+str(i)+').xlsx'
+            excelFile = openpyxl.load_workbook( filename = report_name)
+            print(report_name)
+        except :
+            pass
 
         # 시트 불러오기
         sheet = excelFile['sheet 1']
+        
         # 셀 주소로 값 출력
         # 강의명
         title = sheet['T6'].value
@@ -40,10 +44,10 @@ def saveCrawling ():
         # 학년
         grade = sheet['T12'].value
         # 수업진행방식
-        class_prog = sheet['D20'].value + '&' + sheet['G20'].value + '&' + sheet['J20'].value + '&' + sheet['N20'].value + '&' + sheet['U20'].value + '&' + sheet['AA20'].value
+        class_prog = str(sheet['D20'].value) + '&' + str(sheet['G20'].value) + '&' + str(sheet['J20'].value) + '&' + str(sheet['N20'].value) + '&' + str(sheet['U20'].value) + '&' + str(sheet['AA20'].value)
 
         # 평가방법
-        class_eval = sheet['D23'].value + '&' + sheet['G23'].value + '&' + sheet['J23'].value + '&' + sheet['N23'].value + '&' + sheet['U23'].value + '&' + sheet['AA23'].value
+        class_eval = str(sheet['D23'].value) + '&' + str(sheet['G23'].value) + '&' + str(sheet['J23'].value) + '&' + str(sheet['N23'].value) + '&' + str(sheet['U23'].value) + '&' + str(sheet['AA23'].value)
 
 
         # data = [title, est_year, session, department_title, category, unit, prof, grade, class_prog, class_eval]
