@@ -121,3 +121,10 @@ def searchLectrue(request):
     return render(request, 'lecture/main.html', {
         'lectures' : lectures,
     })
+
+@login_required
+def mypage(request, user_id):
+    user = User.objects.get(pk = user_id)
+    return render(request, 'lecture/mypage.html', {
+        'user' : user,
+    })

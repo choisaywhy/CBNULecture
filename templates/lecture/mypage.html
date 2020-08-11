@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="container">
+    <hr>
+    <div id="comment-box">
+        {% for comment in user.comment.all %}
+
+        <div id="{{comment.id}}" class="comment">
+            <a href={% url 'lecture:detail' comment.lecture.id %}>{{comment.lecture}}</a>
+            <a href="{% url 'lecture:deleteComment' comment.id %}">삭제</a>
+            <a id="{{comment.id}}" href="javascript:" onclick="commentEdit(this)">수정</a>
+            <div class="star">{{ comment.star }}</div>
+            <div class="content">{{ comment.content }}</div>
+
+        </div>
+        <hr>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

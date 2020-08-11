@@ -11,5 +11,6 @@ urlpatterns = [
     path('deletecomment/<int:comment_id>', views.deleteComment, name='deleteComment'),
     path('getcomment/<int:comment_id>', views.getComment, name='getComment'),
     path('searchlecture/', views.searchLectrue, name='searchLectrue'),
+    path('mypage/<int:user_id>',views.mypage, name='mypage'),
 
 ]

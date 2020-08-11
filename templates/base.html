@@ -31,7 +31,8 @@
         <br>
         <p>접속 중 ({{ user.username }}님 |
         {{ user.profile.college }} |
-        {{ user.profile.department }} )</p>
+        {{ user.profile.department }} |
+        <a href="{% url 'lecture:mypage' user.id %}">mypage 접속</a> )</p>
         {% else %}
         <a type="button" class="btn btn-dark" href="{% url 'accounts:login' %}">로그인</a>
         <a type="button" class="btn btn-light" href="{% url 'accounts:signup' %}">회원가입</a>
