@@ -82,20 +82,22 @@ search.click()
 
 print("조회 버튼 클릭")
 
+# 오류 정정시
+# time.sleep(20)
+
+# 일반
 time.sleep(20)
 
 # 출력 버튼 0~17까지 총 3841개
 for j in range(0, 208):
-    for i in range(0,16):
+    for i in range(0,20):
         download_id = 'mainframe_VFS_HFS_INVFS_WorkFrame_win_2275_form_div_work_grd_master_body_gridrow_'+str(i)+'_cell_'+str(i)+'_12GridCellContainerElement'
 
         try:
-            element = WebDriverWait(driver, 30).until(
+            element = WebDriverWait(driver, 4).until(
                 EC.presence_of_element_located((By.ID, download_id))
                 )
         except TimeoutException :
-            scroll = driver.find_element_by_id("mainframe_VFS_HFS_INVFS_WorkFrame_win_2275_form_div_work_grd_master_vscrollbar_incbutton") 
-            scroll.click()
             print("없는 번호" +str(i))
             continue
 
@@ -122,6 +124,9 @@ for j in range(0, 208):
 
         print("popup 전환 완료")
 
+        time.sleep(1)
+
+
         try:
             element = WebDriverWait(driver, 60).until(
                 EC.presence_of_element_located((By.XPATH, "//*[@id='iWeb']"))
@@ -129,14 +134,17 @@ for j in range(0, 208):
         finally:
             {}
         
+        time.sleep(2)
+
         popup2 = driver.find_element_by_xpath("//*[@id='iWeb']")
         driver.switch_to.frame(popup2)
 
         print("popup2 전환 완료")
 
+
         try:
             element = WebDriverWait(driver, 60).until(
-                EC.presence_of_element_located((By.XPATH, "//button[@title='저장']"))
+                EC.presence_of_element_located((By.XPATH, "//button[@title='엑셀 저장']"))
                 )
         finally:
             {}
@@ -144,28 +152,54 @@ for j in range(0, 208):
         print("저장 버튼 찾음")
 
         # driver.implicitly_wait(10) # seconds
-        time.sleep(10)
+        time.sleep(1)
 
-        download2 = driver.find_element_by_xpath("//*[@title='저장']")  
+        download2 = driver.find_element_by_xpath("//*[@title='엑셀 저장']")  
         download2.click()
         download2.click()
 
         print("저장 버튼 클릭")
 
-        time.sleep(3)
-
-        rename = driver.find_element_by_xpath("//*[@id='targetDiv1']/div[2]/div[1]/div[2]/input")
-        rename.clear()
-        rename.send_keys("report"+" ("+str((i+1)*(j+1))+")")
-
-        print("파일 이름 바꿈")
-        
-        download3 = driver.find_element_by_xpath("//*[@id='targetDiv1']/div[2]/div[1]/button[1]")
-        download3.click()
-        
-
-        print("파일 최종 저장")
         time.sleep(4)
+
+        # rename = driver.find_element_by_xpath("//*[@id='targetDiv1']/div[2]/div[1]/div[2]/input")
+        # rename.clear()
+        # rename.send_keys("report"+" ("+str(count)+")")
+        # count+=1
+        # print("파일 이름 바꿈")
+     
+        # try:
+        #     element = WebDriverWait(driver, 60).until(
+        #         EC.presence_of_element_located((By.XPATH, "//button[@title='저장']"))
+        #         )
+        # finally:
+        #     {}
+
+        # print("저장 버튼 찾음")
+
+        # # driver.implicitly_wait(10) # seconds
+        # time.sleep(3)
+
+        # download2 = driver.find_element_by_xpath("//*[@title='저장']")  
+        # download2.click()
+        # download2.click()
+
+        # print("저장 버튼 클릭")
+
+        # time.sleep(3)
+
+        # # rename = driver.find_element_by_xpath("//*[@id='targetDiv1']/div[2]/div[1]/div[2]/input")
+        # # rename.clear()
+        # # rename.send_keys("report"+" ("+str(count)+")")
+        # # count+=1
+        # # print("파일 이름 바꿈")
+        
+        # download3 = driver.find_element_by_xpath("//*[@id='targetDiv1']/div[2]/div[1]/button[1]")
+        # download3.click()
+        
+
+        # print("파일 최종 저장")
+        # time.sleep(4)
 
         # popup 전환
         driver.switch_to.default_content()  # popup2 -> popup
