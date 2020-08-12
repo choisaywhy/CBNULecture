@@ -23,9 +23,16 @@ function getDepartment(text) {
     return data[text];
 }
 
+$(document).ready(function() {
+    setSelectValue();
+})
 
 
 $(document).on('change','select[name=college]', function(e){
+    setSelectValue();
+});
+
+function setSelectValue() {
     let target = $('#id_college option:checked').text();
 
     let department = getDepartment(target);
@@ -35,4 +42,4 @@ $(document).on('change','select[name=college]', function(e){
     }
 
     $('#id_department').html(text);
-});
+}
