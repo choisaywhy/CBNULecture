@@ -40,7 +40,32 @@
                 </span>
     </div>
 </div>
-
 {% endfor %}
 
+<!-- 페이지 네이터 -->
+{% if lectures.has_other_pages %}
+    <ul class="pagination">
+      {% if lectures.has_previous %}
+      <li class="page-item "><a class="page-link prev-btn" href="?page={{ lectures.previous_page_number }}" link=""><</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled"><a class="page-link"><</a>
+      </li>
+      {% endif %}
+      {% for i in page_range %}
+      {% if lectures.number == i %}
+      <li class="page-item active"><a class="page-link num-btn" href="?page={{i}}">{{ i }}</a></li>
+      {% else %}
+      <li class="page-item"><a class="page-link num-btn" href="?page={{i}}">{{ i }}</a></li>
+      {% endif %}
+      {% endfor %}
+      {% if lectures.has_next %}
+      <li class="page-item"><a class="page-link next-btn" href="?page={{ lectures.next_page_number }}" link="">></a>
+      </li>
+      {% else %}
+      <li class="page-item disabled"><a class="page-link">></a></li>
+      {% endif %}
+    </ul>
+    {% endif %}
+<!-- 페이지네이터 끝 -->
 {% endblock %}
