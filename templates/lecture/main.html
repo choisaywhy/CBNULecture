@@ -9,23 +9,63 @@
         <select name="category">
             <option>강의명</option>
             <option>교수</option>
+        </select><br><br>
             <input name="search_data" class="input" type="text" placeholder="강의명/교수명으로 검색해보세요">
             <input type="submit" value="검색">
     </form>
 </div>
 {% for lecture in lectures %}
-<div style="margin-top: 10%;">
+<div style="margin-top: 20px;">
     <div class="box" style="border: 1px solid black;">
-        <span>개설년도: 2020-1 | 교수 : 누구씨 | 전공필수<span>
+        <span>개설년도: 2020-1 | 교수 : {{lecture.prof}} | {{lecture.unit}}<span>
                 <br>
                 <a href="{% url 'lecture:detail' lecture.id %}">
                     <h2>{{lecture.title}}</h2>
                 </a>
                 <hr>
-                <span>댓글: ?개</span> <span style="float: right;">별점: ⭐⭐⭐⭐⭐</span>
+                <span style="float: right;">별점: 
+                    {% if lecture.score > 4 %}
+                    ⭐⭐⭐⭐⭐
+                    {% elif lecture.score > 3 and lecture.score <= 4%}
+                    ⭐⭐⭐⭐
+                    {% elif lecture.score > 2 and lecture.score <= 3%}
+                    ⭐⭐⭐
+                    {% elif lecture.score > 1 and lecture.score <= 2%}
+                    ⭐⭐
+                    {% elif lecture.score > 0 %}
+                    ⭐
+                    {% else %}
+
+                    {% endif %}
+                </span>
     </div>
 </div>
-
 {% endfor %}
 
+<!-- 페이지 네이터 -->
+{% if lectures.has_other_pages %}
+    <ul class="pagination">
+      {% if lectures.has_previous %}
+      <li class="page-item "><a class="page-link prev-btn" href="?page={{ lectures.previous_page_number }}" link=""><</a>
+      </li>
+      {% else %}
+      <li class="page-item disabled"><a class="page-link"><</a>
+      </li>
+      {% endif %}
+      {% for i in page_range %}
+      {% if lectures.number == i %}
+      <li class="page-item active"><a class="page-link num-btn" href="?page={{i}}">{{ i }}</a></li>
+      {% else %}
+      <li class="page-item"><a class="page-link num-btn" href="?page={{i}}">{{ i }}</a></li>
+      {% endif %}
+      {% endfor %}
+      {% if lectures.has_next %}
+      <li class="page-item"><a class="page-link next-btn" href="?page={{ lectures.next_page_number }}" link="">></a>
+      </li>
+      {% else %}
+      <li class="page-item disabled"><a class="page-link">></a></li>
+      {% endif %}
+    </ul>
+    {% endif %}
+<!-- 페이지네이터 끝 -->
 {% endblock %}

@@ -1,11 +1,13 @@
 import openpyxl
 from django.core import serializers
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import Lecture, LectureComment, College, Department
 from .forms import LectureCommentForm
 from accounts.models import Profile
 from django.contrib.auth.models import User
+from .paginator import my_paginator
 
 def evalScore(lecture_id):
     lecture = Lecture.objects.get(pk=lecture_id)
@@ -21,12 +23,18 @@ def evalScore(lecture_id):
         return 0
 
 def main(request):
-    lectures = Lecture.objects.all()
+    lecture_list = Lecture.objects.all()
 
+    page = request.GET.get('page', 1)
+
+    lectures, page_range = my_paginator(lecture_list, page, num=8, page_num_range=10)
     return render(request, 'lecture/main.html', {
         'lectures' : lectures,
+        'page_range':page_range,
     })
 
+
+@login_required
 def detail(request, lecture_id):
     lecture = Lecture.objects.get(pk=lecture_id)
     form = LectureCommentForm()
@@ -117,4 +125,11 @@ def searchLectrue(request):
     
     return render(request, 'lecture/main.html', {
         'lectures' : lectures,
+    })
+
+@login_required
+def mypage(request, user_id):
+    user = User.objects.get(pk = user_id)
+    return render(request, 'lecture/mypage.html', {
+        'user' : user,
     })
