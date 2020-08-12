@@ -6,6 +6,7 @@
 secrets.json
 myenv/
 .vscode/
+tetstt/
 ### Django ###
 *.log
 *.pot
