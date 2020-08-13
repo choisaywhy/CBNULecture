@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en">      
 
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,7 @@
     <script>
         var current_user = '{{request.user}}';
         var csrf_input = '{% csrf_token %}';
-        var lecture_id = '{{lecture.id}}'
+        var lecture_id = '{{lecture.id}}';
     </script>    
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -22,26 +22,42 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 
-<body style="width:100%;">
+<body class="lottemarthappy"style="width:100%;">
 
+    <header class="container">
+        <a type="button" href="/">
+            <img width="35%" src="{% static 'img/banner.png' %}">
+        </a>
+        <div class="userinfo">
+            {% if user.is_active %}
+            <div class="dropdown" style="margin-right:-40px;">
+                <button class="btn dropdown-toggle" style="margin-right: 45px;" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{user.username}}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item disabled">{{user.profile.college}}</a>
+                    <a class="dropdown-item disabled">{{user.profile.department}}</ap>
+                    <a class="dropdown-item" href="{% url 'accounts:logout'%}">LogOut</a>
+                    <a class="dropdown-item" href="{% url 'lecture:mypage' user.id %}">Mypage</a>
+                </div>
+            </div>
+            {% else %}
+            <a type="button" class="btn btn-primary" href="{% url 'accounts:login' %}">Sign In</a>
+            <a type="button" class="btn btn-light" href="{% url 'accounts:signup' %}">Sign Up</a>
+            {% endif %}
+        </div>
+    </header>
     <div class="container">
-        <a type="button" class="btn btn-info" href="/">home</a>
-        {% if user.is_active %}
-        <a type="button" class="btn btn-dark" href="{% url 'accounts:logout' %}">로그아웃</a>
-        <br>
-        <p>접속 중 ({{ user.username }}님 |
-        {{ user.profile.college }} |
-        {{ user.profile.department }} |
-        <a href="{% url 'lecture:mypage' user.id %}">mypage 접속</a> )</p>
-        {% else %}
-        <a type="button" class="btn btn-dark" href="{% url 'accounts:login' %}">로그인</a>
-        <a type="button" class="btn btn-light" href="{% url 'accounts:signup' %}">회원가입</a>
-        <p>로그인 필요</p>
-        {% endif %}
-        <hr> 
         {% block content %} 
         {% endblock content %}
     </div>
+    <footer>
+        멋쟁이 사자처럼 at 충북대학교 8기 운영진
+        <br>
+        <small>github.com/choisaywhy/CBNULecture</small>
+        <br>
+        <small>2020.08.13</small>
+    </footer>
 </body>
 
 </html>

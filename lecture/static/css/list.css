@@ -1,10 +1,37 @@
+@font-face {
+    font-family: 'LotteMartHappy';
+    font-style: normal;
+    font-weight: 400;
+    src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff') format('woff');
+  }
+  
+  @font-face {
+    font-family: 'LotteMartHappy';
+    font-style: normal;
+    font-weight: 700;
+    src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyBold.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyBold.woff') format('woff');
+  }
+  
+  .lottemarthappy * {
+   font-family: 'LotteMartHappy', sans-serif;
+}
+
 body {
     width: 80%;
     margin: 0 auto;
 }
 
 .container {
-    padding-top: 10px;
+    padding-top: 20px;
+}
+
+header{
+    margin: 15px auto; 
+}
+
+.userinfo{
+    float:right;
+    margin: 15px 0;
 }
 
 .title {
@@ -14,10 +41,10 @@ body {
 }
 
 .input {
-    width: 80%;
-    padding: 7px 0 7px .5rem;
-    font-size: 14px;
-    line-height: 18px;
+    width: 87%;
+    padding: 7px 0 7px .9rem;
+    font-size: 16px;
+    line-height: 20px;
     color: #575756;
     border-radius: 20px;
     border: 1px solid #575756;
@@ -31,7 +58,6 @@ body {
 
 .input:focus {
     outline: 0;
-    text-decoration: underline;
 }
 
 .box {
@@ -39,6 +65,8 @@ body {
     height: auto;
     border: 1px solid black;
     display: inline-block;
+    padding:20px;
+    
 }
 
 table {
@@ -78,3 +106,10 @@ h3{
 canvas{
     margin: 0 auto;
 }
+
+
+footer{
+    text-align: center;
+    margin:50px;
+}
+

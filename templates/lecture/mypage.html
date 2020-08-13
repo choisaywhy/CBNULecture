@@ -9,11 +9,23 @@
     <div id="comment-box">
         {% for comment in user.comment.all %}
 
-        <div id="{{comment.id}}" class="comment">
+        <div id="{{comment.id}}" class="comment" style="padding:15px;">
             <a href={% url 'lecture:detail' comment.lecture.id %}>{{comment.lecture}}</a>
-            <a href="{% url 'lecture:deleteComment' comment.id %}">삭제</a>
-            <a id="{{comment.id}}" href="javascript:" onclick="commentEdit(this)">수정</a>
-            <div class="star">{{ comment.star }}</div>
+            <div class="star" style="margin-top:5px;margin-bottom:5px;">
+                {% if comment.star > 4 %}
+                ⭐⭐⭐⭐⭐
+                {% elif comment.star > 3 and comment.star <= 4%}
+                ⭐⭐⭐⭐
+                {% elif comment.star > 2 and comment.star <= 3%}
+                ⭐⭐⭐
+                {% elif comment.star > 1 and comment.star <= 2%}
+                ⭐⭐
+                {% elif comment.star > 0 %}
+                ⭐
+                {% else %}
+
+                {% endif %}
+            </div>            
             <div class="content">{{ comment.content }}</div>
 
         </div>

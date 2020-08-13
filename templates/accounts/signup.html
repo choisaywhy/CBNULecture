@@ -7,27 +7,25 @@
 {% block content %}
 <div class="signup">
 
-        <img src="{% static 'image/logo5.png' %}" width=300>
-
     <div class="signup-form">
         <form method="POST" action="{% url 'accounts:signup' %}">
             {% csrf_token %}
             <br>
             <div class="input-group mb-3">
-                <input class="form-control" name="username" type="text" placeholder="이름">
+                <input class="form-control" name="username" type="text" placeholder="Name">
             </div>
             <br>
             <div class="input-group mb-3">
-                <input class="form-control" name="password1" type="password" placeholder="비밀번호">
+                <input class="form-control" name="password1" type="password" placeholder="Password">
             </div>
             <br>
             <div class="input-group mb-3">
-                <input class="form-control" name="password2" type="password" placeholder="비밀번호확인">
+                <input class="form-control" name="password2" type="password" placeholder="Confirm Password">
             </div>
             <br><br>
             {{form}}
             <br><br>
-            <button type="submit" class="btn btn-primary btn-lg btn-block btn btn-danger">회원가입</button>
+            <button type="submit" class="btn btn-primary btn-lg btn-block btn btn-primary">Sign Up!</button>
         </form>
     </div>
 </div>

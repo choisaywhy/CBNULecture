@@ -11,11 +11,11 @@
 
 {% block content %}
 
-<h1 class="title">교과목 정보</h1>
 <table>
     <thead>
-        <tr class="category">강의명: </tr> {{ lecture.title }}
+        <tr class="category"> </tr><h2> {{ lecture.title }}</h2>
     </thead>
+
     <tbody>
         <tr>
             <td class="category">개설연도</td>
@@ -36,7 +36,7 @@
             <td colspan="2">{{ lecture.category }}</td>
         </tr>
         <tr>
-            <p>별점:               
+            <p>               
                 {% if lecture.score > 4 %}
                 ⭐⭐⭐⭐⭐
                 {% elif lecture.score > 3 and lecture.score <= 4%}
@@ -51,29 +51,31 @@
 
                 {% endif %}</p>
         </tr>
+        <h1 class="title">교과목 정보</h1>
+
     </tbody>
 </table>
 </div>
+<div class="container"> 
+    <div class="chart" style="float:left; margin:20px;">
+        <div>
+            <canvas id="progress" width="500"></canvas>
+        </div>
+    </div>
 
-<div class="container">
-    <div>
-        <canvas id="progress" width="300"></canvas>
+    <div class="chart" style="float:right; margin:20px;">
+        <div>
+            <canvas id="evaluation" width="500" height="500"></canvas>
+        </div>
     </div>
 </div>
-
-<div class="container">
-    <div>
-        <canvas id="evaluation" width="500" height="500"></canvas>
-    </div>
-</div>
-
-<div class="container">
+<div class="container" style="clear:both;">
     <h4 class="title">댓글 작성</h4>
 
     <form name="commentForm" method="POST">
         {% csrf_token %}
         {{form}}
-        <input type="button" value="작성" onclick="addComment({{ lecture.id }})">
+        <input type="button" class="btn btn-success" value="작성" onclick="addComment({{ lecture.id }})">
     </form>
 </div>
 
@@ -82,13 +84,28 @@
     <div id="comment-box">
         {% for comment in lecture.comment.all %}
 
-        <div id="{{comment.id}}" class="comment">
+        <div id="{{comment.id}}" class="comment" style="padding:15px;">
             {{comment.author}}
             {% if request.user == comment.author %}
-            <a href="{% url 'lecture:deleteComment' comment.id %}">삭제</a>
-            <a id="{{comment.id}}" href="javascript:" onclick="commentEdit(this)">수정</a>
+            <a href="{% url 'lecture:deleteComment' comment.id %}">   삭제</a>
+            <a id="{{comment.id}}" href="javascript:" onclick="commentEdit(this)">   수정</a>
             {% endif %}
-            <div class="star">{{ comment.star }}</div>
+
+            <div class="star" style="margin-top:5px;margin-bottom:5px;">
+                {% if comment.star > 4 %}
+                ⭐⭐⭐⭐⭐
+                {% elif comment.star > 3 and comment.star <= 4%}
+                ⭐⭐⭐⭐
+                {% elif comment.star > 2 and comment.star <= 3%}
+                ⭐⭐⭐
+                {% elif comment.star > 1 and comment.star <= 2%}
+                ⭐⭐
+                {% elif comment.star > 0 %}
+                ⭐
+                {% else %}
+
+                {% endif %}
+            </div>
             <div class="content">{{ comment.content }}</div>
 
         </div>
@@ -108,10 +125,10 @@
 
     let ctx = document.getElementById('progress');
     let ctx2 = document.getElementById('evaluation')
-    ctx.width = 300;
-    ctx.height = 300;
-    ctx2.width = 300;
-    ctx2.height = 300;
+    ctx.width = 450;
+    ctx.height = 450;
+    ctx2.width = 450;
+    ctx2.height = 450;
 
 
     let progress = new Chart(ctx, {

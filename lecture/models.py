@@ -21,7 +21,7 @@ class Lecture(models.Model):
     title = models.CharField(max_length=30)
     est_year = models.CharField(max_length=5)
     session = models.CharField(max_length=5)
-    department_title = models.ForeignKey(Department, null=True, on_delete=models.SET_NULL, related_name='dept')
+    department_title = models.CharField(max_length=30)
     category = models.CharField(max_length=10)
     unit = models.CharField(max_length=10)
     prof = models.CharField(max_length=10)
