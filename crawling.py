@@ -28,8 +28,8 @@ pswd = driver.find_element_by_name("pswd")
 commonLoginBtn = driver.find_element_by_xpath("//*[@id='commonLoginBtn']")
 
 # 로그인 정보 입력
-uid.send_keys("2018038082")
-pswd.send_keys("chltpghk98?")
+uid.send_keys("")
+pswd.send_keys("")
 print("로그인 정보 입력 완료")
 
 commonLoginBtn.click()
