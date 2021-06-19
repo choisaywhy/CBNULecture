@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra_js %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 <script type="text/javascript"
     src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
@@ -29,7 +29,7 @@
             <td class="category">담당교수</td>
             <td colspan="2">{{ lecture.prof }}</td>
             <td class="category">이수구분</td>
-            <td colspan="2">{{ lecture.category }}</td>
+            <td colspan="2">{{ lecture.unit }}</td>
         </tr>
         <tr>
             <td class="category">개설학년</td>
